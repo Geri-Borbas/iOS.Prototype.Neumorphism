@@ -6,6 +6,9 @@ struct Capsule: ButtonStyle
 {
 
     
+    var name: String
+    
+        
     func makeBody(configuration: Self.Configuration) -> some View
     {
         configuration.label
@@ -28,18 +31,28 @@ struct Capsule: ButtonStyle
             )
             .foregroundColor(.white)
             .cornerRadius(40)
-            .padding(3 + 1.5)
+            .padding(3 + 3)
             .overlay(
                 RoundedRectangle(cornerRadius: 50)
-                    .stroke(
+                    .strokeBorder(
                         Color.black,
                         lineWidth: 3
                 )
                 .opacity(configuration.isPressed ? 0.8 : 1.0)
             )
+            .background(
+                GeometryReader
+                {
+                    buttonGeometry -> AnyView in
+
+                    let background = Color.init(.sRGB, white: 0.0, opacity: 0.1)
+                    ContentView.buttonFramesForNames[self.name] = buttonGeometry.frame(in: .named("ContentView"))
+                    return AnyView(background)
+                }
+            )
             .padding(
                 .horizontal,
-                40 + 3
+                40
             )
             .opacity(configuration.isPressed ? 0.8 : 1.0)
     }
@@ -50,6 +63,7 @@ struct ImportButton: View
 {
     
     
+    var name: String
     var imageName: String
     var text: String
 
@@ -59,7 +73,7 @@ struct ImportButton: View
         Button(
             action:
             {
-                print("'\(self.text)' tapped.")
+                print("'\(self.name)' button tapped.")
             }
         )
         {
@@ -69,7 +83,7 @@ struct ImportButton: View
                 Text(text).font(.title).fontWeight(.bold)
             }
         }
-        .buttonStyle(Capsule())
+        .buttonStyle(Capsule(name: self.name))
     }
 }
 
@@ -77,17 +91,44 @@ struct ImportButton: View
 struct ContentView: View
 {
     
+    static var viewBounds: CGRect?
+    static var buttonFramesForNames: [String:CGRect] = [:]
+    
     
     var body: some View
     {
         
-        
-        VStack(spacing: 20)
+        GeometryReader
         {
-            ImportButton(imageName: "doc", text: "create new")
-            ImportButton(imageName: "camera", text: "from camera")
-            ImportButton(imageName: "photo.on.rectangle", text: "from library")
+            geometry -> AnyView in
+            
+            let stack = VStack(spacing: 60)
+            {
+                ImportButton(name: "new", imageName: "doc", text: "create new")
+                ImportButton(name: "camera", imageName: "camera", text: "from camera")
+                ImportButton(name: "library", imageName: "photo.on.rectangle", text: "from library")
+            }
+            .frame(
+                minWidth: 0, maxWidth: .infinity,
+                minHeight: 0, maxHeight: .infinity,
+                alignment: .center
+            )
+            .edgesIgnoringSafeArea(.all)
+            .coordinateSpace(name: "ContentView")
+            .background(Color.blue)
+            
+            ContentView.viewBounds = geometry.frame(in: CoordinateSpace.local)
+            
+            return AnyView(stack)
         }
+        .onAppear
+        {
+            print("ContentView.viewBounds: \(String(describing: ContentView.viewBounds))")
+            print("ContentView.buttonFrame[new]: \(String(describing: ContentView.buttonFramesForNames["new"]))")
+            print("ContentView.buttonFrame[camera]: \(String(describing: ContentView.buttonFramesForNames["camera"]))")
+            print("ContentView.buttonFrame[library]: \(String(describing: ContentView.buttonFramesForNames["library"]))")
+        }
+        
     }
 }
 
