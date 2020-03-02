@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		55564F74240CAA440028B7B4 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55564F73240CAA440028B7B4 /* SwiftUIView.swift */; };
 		55564F78240CAB3E0028B7B4 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55564F77240CAB3E0028B7B4 /* Environment.swift */; };
-		55564F7C240CC3080028B7B4 /* Screenshot 2020-03-02 at 5.18.48.png in Resources */ = {isa = PBXBuildFile; fileRef = 55564F7B240CC3080028B7B4 /* Screenshot 2020-03-02 at 5.18.48.png */; };
+		55564F7C240CC3080028B7B4 /* Screenshot_2020-03-02_at_5.18.48.png in Resources */ = {isa = PBXBuildFile; fileRef = 55564F7B240CC3080028B7B4 /* Screenshot_2020-03-02_at_5.18.48.png */; };
 		55E54A58240C619500112EA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E54A57240C619500112EA0 /* AppDelegate.swift */; };
 		55E54A5A240C619500112EA0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E54A59240C619500112EA0 /* SceneDelegate.swift */; };
 		55E54A5C240C619500112EA0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E54A5B240C619500112EA0 /* ContentView.swift */; };
@@ -26,7 +26,7 @@
 /* Begin PBXFileReference section */
 		55564F73240CAA440028B7B4 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		55564F77240CAB3E0028B7B4 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
-		55564F7B240CC3080028B7B4 /* Screenshot 2020-03-02 at 5.18.48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2020-03-02 at 5.18.48.png"; sourceTree = "<group>"; };
+		55564F7B240CC3080028B7B4 /* Screenshot_2020-03-02_at_5.18.48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot_2020-03-02_at_5.18.48.png"; sourceTree = "<group>"; };
 		55E54A54240C619500112EA0 /* SceneKit_Neumorphism.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneKit_Neumorphism.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E54A57240C619500112EA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55E54A59240C619500112EA0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,7 +82,7 @@
 		55564F7A240CC3080028B7B4 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
-				55564F7B240CC3080028B7B4 /* Screenshot 2020-03-02 at 5.18.48.png */,
+				55564F7B240CC3080028B7B4 /* Screenshot_2020-03-02_at_5.18.48.png */,
 			);
 			name = Documentation;
 			path = ../Documentation;
@@ -199,7 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55E54A64240C619700112EA0 /* LaunchScreen.storyboard in Resources */,
-				55564F7C240CC3080028B7B4 /* Screenshot 2020-03-02 at 5.18.48.png in Resources */,
+				55564F7C240CC3080028B7B4 /* Screenshot_2020-03-02_at_5.18.48.png in Resources */,
 				55E54A76240C6F7300112EA0 /* CHANGELOG.md in Resources */,
 				55E54A61240C619700112EA0 /* Preview Assets.xcassets in Resources */,
 				55E54A74240C6D7200112EA0 /* README.md in Resources */,
