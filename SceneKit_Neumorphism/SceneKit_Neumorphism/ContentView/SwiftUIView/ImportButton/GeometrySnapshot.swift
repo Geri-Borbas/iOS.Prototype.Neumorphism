@@ -29,10 +29,10 @@ struct GeometrySnapshot: View
             let view = RoundedRectangle(cornerRadius: 2)
                 .strokeBorder(
                     style: StrokeStyle(
-                        lineWidth: 1 // ,dash: [2]
+                        lineWidth: 1 ,dash: [2]
                     )
                 )
-                .foregroundColor(Color.red.opacity(0.5))
+                .foregroundColor(Color.red.opacity(0.0))
             
             // Snapshot.
             print("GeometrySnapshot.snapshot")

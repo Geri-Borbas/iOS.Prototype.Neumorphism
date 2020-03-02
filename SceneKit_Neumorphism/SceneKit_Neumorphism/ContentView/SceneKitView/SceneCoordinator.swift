@@ -15,28 +15,35 @@ class SceneCoordinator: NSObject
     
     
     var sceneView: SCNView
-    var camera: SCNCamera
-    var backplane: SCNNode
+    
+    
+    private var scene: SCNScene
+    private var camera: SCNCamera
+    private var backplane: SCNNode
     
     
     override init()
     {
         // iPhone 11 Screen.
-        let width = 414.0 // 375.0
-        let height = 818.0 // 812.0
+        let width = 414.0
+        let height = 818.0
         
         // Capsule button dimensions.
         let outlineWidth: CGFloat = 40.0
-        let buttonWidth: CGFloat = 334.0 + outlineWidth * 1 // 295.0
-        let buttonHeight: CGFloat = 77.66666666666663 + outlineWidth * 2 // 85.0
+        let buttonWidth: CGFloat = 334.0 + outlineWidth * 2 // 295.0
+        let buttonHeight: CGFloat = 83.66666666666663 + outlineWidth * 2 // 85.0
+        
+        // Scene.
+        self.scene = SCNScene()
         
         // Scene view.
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         let sceneView = SCNView(frame: frame)
             sceneView.allowsCameraControl = true
             sceneView.antialiasingMode = .multisampling4X
-            sceneView.scene = SCNScene()
-        
+            sceneView.contentMode = .redraw
+            sceneView.scene = self.scene
+                
         // Camera.
         self.camera = SCNCamera()
         self.camera.usesOrthographicProjection = true
@@ -129,15 +136,12 @@ class SceneCoordinator: NSObject
         self.backplane = SCNNode(geometry: SCNPlane(width: CGFloat(width), height: CGFloat(height)))
         
         // Add nodes.
-        if let rootNode = sceneView.scene?.rootNode
-        {
-            rootNode.addChildNode(cameraNode)
-            rootNode.addChildNode(ambientLightNode)
-            rootNode.addChildNode(lightNode)
-            rootNode.addChildNode(backlightNode)
-            rootNode.addChildNode(self.backplane)
-            rootNode.addChildNode(SCNNode(geometry: shape))
-        }
+        self.scene.rootNode.addChildNode(cameraNode)
+        self.scene.rootNode.addChildNode(ambientLightNode)
+        self.scene.rootNode.addChildNode(lightNode)
+        self.scene.rootNode.addChildNode(backlightNode)
+        self.scene.rootNode.addChildNode(self.backplane)
+        self.scene.rootNode.addChildNode(SCNNode(geometry: shape))
         
         // Reference.
         self.sceneView = sceneView
@@ -146,32 +150,30 @@ class SceneCoordinator: NSObject
         super.init()
         
         // Rendering events.
-        sceneView.delegate = self
+        self.sceneView.delegate = self
     }
     
     func onChange(_ snapshot: Snapshot)
     {
         print("SceneKitView.environment.onChange")
         print("viewBounds: \(String(describing: snapshot.viewBounds))")
-        // print("buttonFramesForNames: \(String(describing: snapshot.buttonFramesForNames))")
-        
-        // View dimensions.
-        let height = Double(snapshot.viewBounds.height)
-        
-        // View size.
-        self.sceneView.bounds = snapshot.viewBounds
-        
-        // Camera settings.
-        self.camera.orthographicScale = height / 2
-        self.camera.zNear = -height
-        self.camera.zFar = height
+        print("buttonFramesForNames[\"camera\"]: \(String(describing: snapshot.buttonFramesForNames["camera"]))")
+                
+        // Adjust bounds.
+        self.sceneView.frame = snapshot.viewBounds
         
         // Backplane size.
         self.backplane.geometry = SCNPlane(
             width: snapshot.viewBounds.width,
             height: snapshot.viewBounds.height
         )
-        
+
+        // Camera settings.
+        let height = Double(snapshot.viewBounds.height)
+        self.camera.orthographicScale = height / 2
+        self.camera.zNear = -height
+        self.camera.zFar = height
+
         print("sceneView.frame: \(String(describing: sceneView.frame))")
     }
 }

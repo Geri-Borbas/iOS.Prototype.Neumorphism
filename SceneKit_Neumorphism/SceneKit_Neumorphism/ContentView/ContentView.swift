@@ -23,8 +23,6 @@ struct ContentView: View
         {
             SceneKitView().edgesIgnoringSafeArea(.all)
             SwiftUIView().edgesIgnoringSafeArea(.all)
-                .compositingGroup()
-                .blendMode(.multiply)
         }
         .edgesIgnoringSafeArea(.all)
         .environmentObject(self.snapshot)

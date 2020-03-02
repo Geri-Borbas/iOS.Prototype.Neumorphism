@@ -37,5 +37,7 @@ struct ImportButton: View
             }
         }
         .buttonStyle(Capsule(name: self.name))
+        .compositingGroup()
+        .blendMode(.multiply)
     }
 }
