@@ -36,6 +36,7 @@ struct Capsule: ButtonStyle
                 )
                 .opacity(configuration.isPressed ? 0.8 : 1.0)
             )
+            .overlay(GeometrySnapshot(name: self.name))
             .padding(
                 .horizontal,
                 40

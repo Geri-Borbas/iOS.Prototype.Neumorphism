@@ -20,12 +20,13 @@ extension SceneKitView
         
         var sceneKitView: SceneKitView
 
+        
         init(_ sceneKitView: SceneKitView)
         { self.sceneKitView = sceneKitView }
 
         func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval)
-        {
-            print("renderer(_:updateAtTime:), %@", String(describing: sceneKitView.environment.viewBounds))
+        {            
+            // print("SceneKitView.Coordinator.renderer(_:updateAtTime:)")
         }
     }
 }
@@ -34,7 +35,7 @@ struct SceneKitView : UIViewRepresentable
 {
     
     
-    @EnvironmentObject var environment: Environment
+    @EnvironmentObject var snapshot: Snapshot
 
     
     func makeCoordinator() -> SceneKitView.Coordinator
@@ -43,8 +44,16 @@ struct SceneKitView : UIViewRepresentable
     
     func makeUIView(context: UIViewRepresentableContext<SceneKitView>) -> SCNView
     {
+        self.snapshot.onChange =
+        {
+            snapshot in
+            
+            print("SceneKitView.environment.onSnapshot")
+            print("viewBounds: \(String(describing: snapshot.viewBounds))")
+            print("buttonFramesForNames: \(String(describing: snapshot.buttonFramesForNames))")
+        }
+        
         print("SceneKitView.makeUIView")
-        print("viewBounds: \(String(describing: self.environment.viewBounds))")
         
         // iPhone 11 Screen.
         let width = 414.0 // 375.0
@@ -168,7 +177,6 @@ struct SceneKitView : UIViewRepresentable
     func updateUIView(_ view: SCNView, context: Context)
     {
         print("SceneKitView.updateUIView")
-        print("viewBounds: \(String(describing: self.environment.viewBounds))")
     }
 }
 

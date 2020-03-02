@@ -13,39 +13,47 @@ struct SwiftUIView: View
 {    
 
     
-    @EnvironmentObject var environment: Environment
+    @EnvironmentObject var snapshot: Snapshot
     
     
     var body: some View
     {
-        GeometryReader
+        // View builder.
+        let view = GeometryReader
         {
-            geometry in
+            geometry -> AnyView in
             
-            VStack(spacing: 60)
+            // View builder.
+            let view = ZStack
             {
-                ImportButton(name: "new", imageName: "doc", text: "create new")
-                ImportButton(name: "camera", imageName: "camera", text: "from camera")
-                ImportButton(name: "library", imageName: "photo.on.rectangle", text: "from library")
+                // UI.
+                VStack(spacing: 60)
+                {
+                    ImportButton(name: "new", imageName: "doc", text: "create new")
+                    ImportButton(name: "camera", imageName: "camera", text: "from camera")
+                    ImportButton(name: "library", imageName: "photo.on.rectangle", text: "from library")
+                }
+                .frame(
+                    minWidth: 0, maxWidth: .infinity,
+                    minHeight: 0, maxHeight: .infinity,
+                    alignment: .center
+                )
+                .edgesIgnoringSafeArea(.all)
+                .coordinateSpace(name: "ContentView")
+                .background(Color.clear)
             }
-            .frame(
-                minWidth: 0, maxWidth: .infinity,
-                minHeight: 0, maxHeight: .infinity,
-                alignment: .center
-            )
-            .edgesIgnoringSafeArea(.all)
-            .coordinateSpace(name: "ContentView")
-            .background(Color.clear)
-            .onAppear
-            {
-                print("SwiftUIView.onAppear")
-                
-                // Publish geometry.
-                self.environment.viewBounds = geometry.frame(in: CoordinateSpace.local)
-                
-                print("viewBounds: \(String(describing: self.environment.viewBounds))")
-            }
-        }
-                
+            
+            // Snapshot.
+            print("SwiftUIView.snapshot")
+            self.snapshot.viewBounds = geometry.frame(in: CoordinateSpace.local)
+            self.snapshot.onChange(self.snapshot)
+        
+            // Return builder.
+            return AnyView(view)
+            
+        }.environmentObject(self.snapshot)
+        
+        // Return builder.
+        return AnyView(view)
     }
 }

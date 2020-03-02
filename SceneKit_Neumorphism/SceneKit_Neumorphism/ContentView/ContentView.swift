@@ -13,10 +13,7 @@ struct ContentView: View
 {
     
     
-    var environment = Environment()
-    
-    
-    static var buttonFramesForNames: [String:CGRect] = [:]
+    var snapshot = Snapshot()
     
     
     var body: some View
@@ -25,26 +22,12 @@ struct ContentView: View
         ZStack
         {
             SceneKitView().edgesIgnoringSafeArea(.all)
-            .onAppear
-            {
-                print("SceneKitView.onAppear")
-                print("viewBounds: \(String(describing: self.environment.viewBounds))")
-            }
             SwiftUIView().edgesIgnoringSafeArea(.all)
                 .compositingGroup()
                 .blendMode(.multiply)
-                // .clipped()
         }
         .edgesIgnoringSafeArea(.all)
-        .environmentObject(self.environment)
-        .onAppear
-        {
-            print("ContentView.onAppear")
-            print("viewBounds: \(String(describing: self.environment.viewBounds))")
-//            print("buttonFrame[new]: \(String(describing: ContentView.buttonFramesForNames["new"]))")
-//            print("buttonFrame[camera]: \(String(describing: ContentView.buttonFramesForNames["camera"]))")
-//            print("buttonFrame[library]: \(String(describing: ContentView.buttonFramesForNames["library"]))")
-        }
+        .environmentObject(self.snapshot)
     }
 }
 

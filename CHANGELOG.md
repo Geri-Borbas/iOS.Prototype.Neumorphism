@@ -1,5 +1,11 @@
 # SceneKit Neumorphism
 
+
+* 0.0.6
+
+    + Manual updates on `SceneKitView` (with unpublished properties)
+    + Extracted geometry snapshot to a `View`
+
 * 0.0.5
 
     + Added `@EnvironmentObject` to collect geometry data
