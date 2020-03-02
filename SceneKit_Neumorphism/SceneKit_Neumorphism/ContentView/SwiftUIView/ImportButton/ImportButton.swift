@@ -13,6 +13,9 @@ struct ImportButton: View
 {
     
     
+    @EnvironmentObject var environment: Environment
+    
+    
     var name: String
     var imageName: String
     var text: String
@@ -34,5 +37,20 @@ struct ImportButton: View
             }
         }
         .buttonStyle(Capsule(name: self.name))
+        .background(
+            GeometryReader
+            {
+                buttonGeometry -> AnyView in
+
+                let background = Color.clear // Color.init(.sRGB, white: 0.0, opacity: 0.1)
+                    .onAppear()
+                    {
+                        self.environment.buttonFramesForNames[self.name] = buttonGeometry.frame(in: .named("ContentView"))
+                    }
+                ContentView.buttonFramesForNames[self.name] = buttonGeometry.frame(in: .named("ContentView"))
+                
+                return AnyView(background)
+            }
+        )
     }
 }

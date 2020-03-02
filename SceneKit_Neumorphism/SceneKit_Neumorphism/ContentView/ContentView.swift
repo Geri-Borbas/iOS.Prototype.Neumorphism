@@ -13,7 +13,9 @@ struct ContentView: View
 {
     
     
-    static var viewBounds: CGRect?
+    var environment = Environment()
+    
+    
     static var buttonFramesForNames: [String:CGRect] = [:]
     
     
@@ -22,48 +24,34 @@ struct ContentView: View
         
         ZStack
         {
-            // SceneKit.
-            SceneKitView()
-                .edgesIgnoringSafeArea(.all)
-            
-            // SwiftUI.
-            GeometryReader
-            {
-                geometry -> AnyView in
-                
-                let stack = VStack(spacing: 60)
-                {
-                    ImportButton(name: "new", imageName: "doc", text: "create new")
-                    ImportButton(name: "camera", imageName: "camera", text: "from camera")
-                    ImportButton(name: "library", imageName: "photo.on.rectangle", text: "from library")
-                }
-                .frame(
-                    minWidth: 0, maxWidth: .infinity,
-                    minHeight: 0, maxHeight: .infinity,
-                    alignment: .center
-                )
-                .edgesIgnoringSafeArea(.all)
-                .coordinateSpace(name: "ContentView")
-                .background(Color.clear)
-                
-                ContentView.viewBounds = geometry.frame(in: CoordinateSpace.local)
-                
-                return AnyView(stack)
-            }
+            SceneKitView().edgesIgnoringSafeArea(.all)
             .onAppear
             {
-                print("ContentView.viewBounds: \(String(describing: ContentView.viewBounds))")
-                print("ContentView.buttonFrame[new]: \(String(describing: ContentView.buttonFramesForNames["new"]))")
-                print("ContentView.buttonFrame[camera]: \(String(describing: ContentView.buttonFramesForNames["camera"]))")
-                print("ContentView.buttonFrame[library]: \(String(describing: ContentView.buttonFramesForNames["library"]))")
+                print("SceneKitView.onAppear")
+                print("viewBounds: \(String(describing: self.environment.viewBounds))")
             }
+            SwiftUIView().edgesIgnoringSafeArea(.all)
+                .compositingGroup()
+                .blendMode(.multiply)
+                // .clipped()
         }
-        
+        .edgesIgnoringSafeArea(.all)
+        .environmentObject(self.environment)
+        .onAppear
+        {
+            print("ContentView.onAppear")
+            print("viewBounds: \(String(describing: self.environment.viewBounds))")
+//            print("buttonFrame[new]: \(String(describing: ContentView.buttonFramesForNames["new"]))")
+//            print("buttonFrame[camera]: \(String(describing: ContentView.buttonFramesForNames["camera"]))")
+//            print("buttonFrame[library]: \(String(describing: ContentView.buttonFramesForNames["library"]))")
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+struct ContentView_Previews: PreviewProvider
+{
+    
+    
+    static var previews: some View
+    { ContentView() }
 }

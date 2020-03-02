@@ -11,7 +11,7 @@ import SwiftUI
 
 struct Capsule: ButtonStyle
 {
-
+       
     
     var name: String
     
@@ -25,7 +25,7 @@ struct Capsule: ButtonStyle
             )
             .padding(16)
             .background(Color.gray)
-            .foregroundColor(.clear)
+            .foregroundColor(.white)
             .cornerRadius(40)
             .padding(3 + 3)
             .overlay(
@@ -35,16 +35,6 @@ struct Capsule: ButtonStyle
                         lineWidth: 3
                 )
                 .opacity(configuration.isPressed ? 0.8 : 1.0)
-            )
-            .background(
-                GeometryReader
-                {
-                    buttonGeometry -> AnyView in
-
-                    let background = Color.clear // Color.init(.sRGB, white: 0.0, opacity: 0.1)
-                    ContentView.buttonFramesForNames[self.name] = buttonGeometry.frame(in: .named("ContentView"))
-                    return AnyView(background)
-                }
             )
             .padding(
                 .horizontal,

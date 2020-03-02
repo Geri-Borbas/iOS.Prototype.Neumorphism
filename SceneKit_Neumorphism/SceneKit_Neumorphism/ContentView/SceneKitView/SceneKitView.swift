@@ -10,12 +10,42 @@ import SwiftUI
 import SceneKit
 
 
+extension SceneKitView
+{
+    
+    
+    class Coordinator: NSObject, SCNSceneRendererDelegate
+    {
+        
+        
+        var sceneKitView: SceneKitView
+
+        init(_ sceneKitView: SceneKitView)
+        { self.sceneKitView = sceneKitView }
+
+        func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval)
+        {
+            print("renderer(_:updateAtTime:), %@", String(describing: sceneKitView.environment.viewBounds))
+        }
+    }
+}
+
 struct SceneKitView : UIViewRepresentable
 {
+    
+    
+    @EnvironmentObject var environment: Environment
 
     
-    func makeUIView(context: Context) -> UIView
+    func makeCoordinator() -> SceneKitView.Coordinator
+    { return Coordinator(self) }
+    
+    
+    func makeUIView(context: UIViewRepresentableContext<SceneKitView>) -> SCNView
     {
+        print("SceneKitView.makeUIView")
+        print("viewBounds: \(String(describing: self.environment.viewBounds))")
+        
         // iPhone 11 Screen.
         let width = 414.0 // 375.0
         let height = 818.0 // 812.0
@@ -31,6 +61,7 @@ struct SceneKitView : UIViewRepresentable
             sceneView.allowsCameraControl = true
             sceneView.antialiasingMode = .multisampling4X
             sceneView.scene = SCNScene()
+            sceneView.delegate = context.coordinator
         
         // Camera.
         let camera = SCNCamera()
@@ -71,7 +102,7 @@ struct SceneKitView : UIViewRepresentable
         // Ambient light.
         let ambientLight = SCNLight()
             ambientLight.type = .ambient
-            ambientLight.intensity = 500
+            ambientLight.intensity = 300
         
         // Ambient light node.
         let ambientLightNode = SCNNode()
@@ -134,9 +165,10 @@ struct SceneKitView : UIViewRepresentable
         return sceneView
     }
 
-    func updateUIView(_ view: UIView, context: Context)
+    func updateUIView(_ view: SCNView, context: Context)
     {
-
+        print("SceneKitView.updateUIView")
+        print("viewBounds: \(String(describing: self.environment.viewBounds))")
     }
 }
 
