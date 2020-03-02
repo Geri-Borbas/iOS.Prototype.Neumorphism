@@ -23,6 +23,7 @@
 		55E54A72240C68E400112EA0 /* SceneKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E54A71240C68E400112EA0 /* SceneKitView.swift */; };
 		55E54A74240C6D7200112EA0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 55E54A73240C6D7200112EA0 /* README.md */; };
 		55E54A76240C6F7300112EA0 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 55E54A75240C6F7300112EA0 /* CHANGELOG.md */; };
+		55EC8204240DBBF800993C6A /* CapsuleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EC8203240DBBF800993C6A /* CapsuleNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		55E54A71240C68E400112EA0 /* SceneKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKitView.swift; sourceTree = "<group>"; };
 		55E54A73240C6D7200112EA0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		55E54A75240C6F7300112EA0 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
+		55EC8203240DBBF800993C6A /* CapsuleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 			children = (
 				55E54A71240C68E400112EA0 /* SceneKitView.swift */,
 				55746501240D8EA400642DD4 /* SceneCoordinator.swift */,
+				55EC8203240DBBF800993C6A /* CapsuleNode.swift */,
 			);
 			path = SceneKitView;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				55E54A6D240C645E00112EA0 /* Capsule.swift in Sources */,
 				55E54A5A240C619500112EA0 /* SceneDelegate.swift in Sources */,
 				55532CFA240D62BA003C6DD9 /* Snapshot.swift in Sources */,
+				55EC8204240DBBF800993C6A /* CapsuleNode.swift in Sources */,
 				55E54A5C240C619500112EA0 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

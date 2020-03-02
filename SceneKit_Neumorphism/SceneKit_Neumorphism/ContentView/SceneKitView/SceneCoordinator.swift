@@ -20,6 +20,7 @@ class SceneCoordinator: NSObject
     private var scene: SCNScene
     private var camera: SCNCamera
     private var backplane: SCNNode
+    private var buttonNodes: SCNNode
     
     
     override init()
@@ -27,11 +28,6 @@ class SceneCoordinator: NSObject
         // iPhone 11 Screen.
         let width = 414.0
         let height = 818.0
-        
-        // Capsule button dimensions.
-        let outlineWidth: CGFloat = 40.0
-        let buttonWidth: CGFloat = 334.0 + outlineWidth * 2 // 295.0
-        let buttonHeight: CGFloat = 83.66666666666663 + outlineWidth * 2 // 85.0
         
         // Scene.
         self.scene = SCNScene()
@@ -89,51 +85,24 @@ class SceneCoordinator: NSObject
         let ambientLightNode = SCNNode()
             ambientLightNode.light = ambientLight
         
-        // Capsule button.
-        let path = UIBezierPath(
-            roundedRect: CGRect(
-                x: -buttonWidth / 2,
-                y: -buttonHeight / 2,
-                width: buttonWidth,
-                height: buttonHeight
-            ),
-            cornerRadius: buttonHeight / 2
-        )
-        
-        // Profile.
-        let profile = UIBezierPath()
-            profile.move(to: CGPoint(x: 0.00, y: 1.00))
-            profile.addCurve(
-                to: CGPoint(x: 1.00, y: 0.00),
-                controlPoint1: CGPoint(x: 0.00, y: 0.25),
-                controlPoint2: CGPoint(x: 0.25, y: 0.00))
-        
-        // More detailed.
-        let sharpness: CGFloat = 0.6
-        let detailedProfile = UIBezierPath()
-            detailedProfile.move(to: CGPoint(x: 0.00, y: 1.00))
-            detailedProfile.addCurve(
-                to: CGPoint(x: 0.90, y: 0.10),
-                controlPoint1: CGPoint(x: 0.00, y: 1.00 - 0.90 * sharpness),
-                controlPoint2: CGPoint(x: 0.90 - 0.90 * sharpness, y: 0.10))
-            detailedProfile.addCurve(
-                to: CGPoint(x: 1.00, y: 0.00),
-                controlPoint1: CGPoint(x: 1.00 - 0.1 * (1.0 - sharpness), y: 0.10),
-                controlPoint2: CGPoint(x: 1.00, y: 0.10 - 0.1 * (1.0 - sharpness)))
-            
-        // Path subdivisions.
-        path.flatness = 0.1
-        profile.flatness = 0.1
-        detailedProfile.flatness = 0.1
-        
-        // Assemble geometry.
-        let shape = SCNShape(path: path, extrusionDepth: outlineWidth * 2)
-            shape.chamferMode = .front
-            shape.chamferRadius = outlineWidth
-            shape.chamferProfile = detailedProfile
-            
         // Create backplane.
         self.backplane = SCNNode(geometry: SCNPlane(width: CGFloat(width), height: CGFloat(height)))
+        
+        // Create buttons.
+        let outlineWidth: CGFloat = 40.0
+        let buttonWidth: CGFloat = 334.0 + outlineWidth * 2
+        let buttonHeight: CGFloat = 83.66666666666663 + outlineWidth * 2
+        self.buttonNodes = SCNNode()
+        self.buttonNodes.addChildNode(
+            CapsuleNode.Node(
+                for: CGRect(
+                    x: -buttonWidth / 2,
+                    y: -buttonHeight / 2,
+                    width: buttonWidth,
+                    height: buttonHeight
+                ),
+                outlineWidth: outlineWidth
+        ))
         
         // Add nodes.
         self.scene.rootNode.addChildNode(cameraNode)
@@ -141,7 +110,7 @@ class SceneCoordinator: NSObject
         self.scene.rootNode.addChildNode(lightNode)
         self.scene.rootNode.addChildNode(backlightNode)
         self.scene.rootNode.addChildNode(self.backplane)
-        self.scene.rootNode.addChildNode(SCNNode(geometry: shape))
+        self.scene.rootNode.addChildNode(self.buttonNodes)
         
         // Reference.
         self.sceneView = sceneView
