@@ -1,6 +1,10 @@
 # SceneKit Neumorphism
 
 
+* 0.0.7
+
+    + Extracted `SceneKit` implementation to `SceneCoordinator`
+
 * 0.0.6
 
     + Manual updates on `SceneKitView` (with unpublished properties)
