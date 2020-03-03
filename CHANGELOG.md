@@ -1,6 +1,10 @@
 # SceneKit Neumorphism
 
 
+* 0.0.8
+
+    + Extracted capsule node creation
+
 * 0.0.7
 
     + Extracted `SceneKit` implementation to `SceneCoordinator`

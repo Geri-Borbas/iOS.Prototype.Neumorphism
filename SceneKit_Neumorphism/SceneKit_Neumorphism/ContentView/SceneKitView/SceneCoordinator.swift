@@ -89,19 +89,19 @@ class SceneCoordinator: NSObject
         self.backplane = SCNNode(geometry: SCNPlane(width: CGFloat(width), height: CGFloat(height)))
         
         // Create buttons.
-        let outlineWidth: CGFloat = 40.0
-        let buttonWidth: CGFloat = 334.0 + outlineWidth * 2
-        let buttonHeight: CGFloat = 83.66666666666663 + outlineWidth * 2
         self.buttonNodes = SCNNode()
         self.buttonNodes.addChildNode(
             CapsuleNode.Node(
                 for: CGRect(
-                    x: -buttonWidth / 2,
-                    y: -buttonHeight / 2,
-                    width: buttonWidth,
-                    height: buttonHeight
+                    x: 40.0,
+                    y: 310.66666666666663,
+                    // y: 445.33333333333326,
+                    // y: 586.0,
+                    width: 334.0,
+                    height: 77.66666666666663
                 ),
-                outlineWidth: outlineWidth
+                in: frame,
+                outlineWidth: 40.0
         ))
         
         // Add nodes.
@@ -126,7 +126,7 @@ class SceneCoordinator: NSObject
     {
         print("SceneKitView.environment.onChange")
         print("viewBounds: \(String(describing: snapshot.viewBounds))")
-        print("buttonFramesForNames[\"camera\"]: \(String(describing: snapshot.buttonFramesForNames["camera"]))")
+        print("buttonFramesForNames[\"library\"]: \(String(describing: snapshot.buttonFramesForNames["library"]))")
                 
         // Adjust bounds.
         self.sceneView.frame = snapshot.viewBounds

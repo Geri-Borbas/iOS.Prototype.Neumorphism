@@ -14,12 +14,22 @@ struct CapsuleNode
 {
     
     
-    static func Node(for frame: CGRect, outlineWidth: CGFloat) -> SCNNode
+    static func Node(for frame: CGRect, in viewBounds: CGRect, outlineWidth: CGFloat) -> SCNNode
     {
-        // Capsule button.
+        // Frame.
+        let capsuleWidth = frame.width + outlineWidth * 2.0
+        let capsuleHeight = frame.height + outlineWidth * 2.0
+        let capsuleFrame = CGRect(
+            x: -capsuleWidth / 2.0,
+            y: -capsuleHeight / 2.0,
+            width: capsuleWidth,
+            height: capsuleHeight
+        )
+        
+        // Path.
         let path = UIBezierPath(
-            roundedRect: frame,
-            cornerRadius: frame.size.height / 2
+            roundedRect: capsuleFrame,
+            cornerRadius: capsuleHeight / 2
         )
         
         // Profile.
@@ -49,11 +59,29 @@ struct CapsuleNode
         detailedProfile.flatness = 0.1
         
         // Assemble geometry.
-        let shape = SCNShape(path: path, extrusionDepth: outlineWidth * 2)
+        let depth = outlineWidth > 0.0 ? outlineWidth * 2 : capsuleHeight
+        let shape = SCNShape(path: path, extrusionDepth: depth)
             shape.chamferMode = .front
             shape.chamferRadius = outlineWidth
             shape.chamferProfile = detailedProfile
         
-        return SCNNode(geometry: shape)
+        // Position.
+        let halfViewSize = CGPoint(x: viewBounds.size.width / 2.0, y: viewBounds.size.height / 2.0)
+        let halfFrameSize = CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0)
+        let screenPosition = CGPoint(
+            x: frame.origin.x - halfViewSize.x + halfFrameSize.x,
+            y: frame.origin.y - halfViewSize.y - halfFrameSize.y
+        )
+        let worldPosition = SCNVector3(
+            x: Float(screenPosition.x),
+            y: Float(-screenPosition.y), // Flip (!)
+            z: 0.0
+        )
+        
+        // Node.
+        let node = SCNNode(geometry: shape)
+            node.worldPosition = worldPosition
+        
+        return node
     }
 }
