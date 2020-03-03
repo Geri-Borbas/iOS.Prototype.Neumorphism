@@ -70,7 +70,7 @@ struct CapsuleNode
         let halfFrameSize = CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0)
         let screenPosition = CGPoint(
             x: frame.origin.x - halfViewSize.x + halfFrameSize.x,
-            y: frame.origin.y - halfViewSize.y - halfFrameSize.y
+            y: frame.origin.y - halfViewSize.y + halfFrameSize.y
         )
         let worldPosition = SCNVector3(
             x: Float(screenPosition.x),

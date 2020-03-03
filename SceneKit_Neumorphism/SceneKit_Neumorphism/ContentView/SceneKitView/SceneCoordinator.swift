@@ -51,9 +51,9 @@ class SceneCoordinator: NSObject
         let cameraNode = SCNNode()
             cameraNode.camera = self.camera
         
-        // Light.
-        let temperatureMultiplier: CGFloat = 1.4
         let light = SCNLight()
+        // Light.
+        let temperatureMultiplier: CGFloat = 0.6
             light.type = .omni
             light.intensity = 600
             light.temperature = 6500 / temperatureMultiplier
@@ -90,19 +90,6 @@ class SceneCoordinator: NSObject
         
         // Create buttons.
         self.buttonNodes = SCNNode()
-        self.buttonNodes.addChildNode(
-            CapsuleNode.Node(
-                for: CGRect(
-                    x: 40.0,
-                    y: 310.66666666666663,
-                    // y: 445.33333333333326,
-                    // y: 586.0,
-                    width: 334.0,
-                    height: 77.66666666666663
-                ),
-                in: frame,
-                outlineWidth: 40.0
-        ))
         
         // Add nodes.
         self.scene.rootNode.addChildNode(cameraNode)
@@ -142,6 +129,33 @@ class SceneCoordinator: NSObject
         self.camera.orthographicScale = height / 2
         self.camera.zNear = -height
         self.camera.zFar = height
+        
+        // Recreate capsules (if snapshots any).
+        if
+            let frame_1 = snapshot.buttonFramesForNames["new"],
+            let frame_2 = snapshot.buttonFramesForNames["camera"],
+            let frame_3 = snapshot.buttonFramesForNames["library"]
+        {
+            let outlineWidth: CGFloat = 30.0
+            self.buttonNodes.enumerateChildNodes{ eachNode, stop in eachNode.removeFromParentNode() }
+            self.buttonNodes.addChildNode(CapsuleNode.Node(
+                for: frame_1,
+                in: snapshot.viewBounds,
+                outlineWidth: outlineWidth
+            ))
+            self.buttonNodes.addChildNode(CapsuleNode.Node(
+                for: frame_2,
+                in: snapshot.viewBounds,
+                outlineWidth: outlineWidth
+            ))
+            self.buttonNodes.addChildNode(CapsuleNode.Node(
+                for: frame_3,
+                in: snapshot.viewBounds,
+                outlineWidth: outlineWidth
+            ))
+        }
+        
+        self.buttonNodes.position = SCNVector3.init()
 
         print("sceneView.frame: \(String(describing: sceneView.frame))")
     }

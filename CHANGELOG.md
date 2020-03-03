@@ -1,6 +1,10 @@
 # SceneKit Neumorphism
 
 
+* 0.1.0
+
+    + Dynamic button creation
+
 * 0.0.8
 
     + Extracted capsule node creation
